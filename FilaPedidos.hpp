@@ -4,7 +4,7 @@
 class FilaPedidos
 {
 private:
-    Pedido **pedidos; //um * é para o array e o outro é pro ponteiro 
+    Pedido** pedidos; //um * para o array e o outro pro ponteiro 
     int tamanho;
 
 public:
