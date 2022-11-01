@@ -36,8 +36,7 @@ int main()
 
     while (tempo != TEMPO_MAX) // while pra tudo isso rodar enquanto não bater no tempo max
     {
-        
-         // SE UM PEDIDO FOR CRIADO, o que acontece, o que é feito com ele e para onde ele vai.
+                  
 
         if (rand() % 100 <= PROBABILIDADE) // proabilidade do pedido ser criado
         {
