@@ -1,32 +1,31 @@
 #include <iostream>
-#include "Separadores.hpp"
+#include "Entregadores.hpp"
 
 using namespace std;
 
-Separadores::Separadores(int numSeparadores)
+Entregadores::Entregadores(int numEntregadores)
 {
-    this->separadores = new Pedido *[numSeparadores]; // entregando o pedido para os separadores
-    this->numSeparadores = numSeparadores;            // definindo o número de separadores
-    this->separadoresOcupados = 0;
+    this->entregadores = new Pedido *[numEntregadores];
+    this->numEntregadores = numEntregadores;
+    this->entregadoresOcupados = 0;
 
-    for (int i = 0; i < numSeparadores; i++)
-    {
-        separadores[i] = NULL;
-    }
+    for (int i = 0; i < numEntregadores; i++)
+        entregadores[i] = NULL;
 }
 
-void Separadores::adicionaPedido(Pedido *pedido, int tempo)
+void Entregadores::adicionaPedido(Pedido *pedido, int tempo)
 {
-    if (separadoresOcupados < numSeparadores)
+    if (entregadoresOcupados < numEntregadores)
     {
-        for (int i = 0; i < numSeparadores; i++)
+        for (int i = 0; i < numEntregadores; i++)
         {
-            if (separadores[i] == NULL)
+            if (entregadores[i] == NULL)
             {
-                separadores[separadoresOcupados] = pedido;
-                separadoresOcupados++;
+                entregadores[i] = pedido;
+                entregadoresOcupados++;
+
                 pedido->addTempoGastoFila(tempo - pedido->getTempoPronto());
-                pedido->setTempoPronto(tempo + pedido->getProdutos());
+                pedido->setTempoPronto(tempo + (4 + (rand() % 5)));
 
                 return;
             }
@@ -34,43 +33,41 @@ void Separadores::adicionaPedido(Pedido *pedido, int tempo)
     }
 }
 
-Pedido *Separadores::removePedidoPronto(int tempo)
+Pedido *Entregadores::removePedidoPronto(int tempo)
 {
-    for (int i = 0; i < numSeparadores; i++)
+    for (int i = 0; i < numEntregadores; i++)
     {
-        if (separadores[i] != NULL)
+        if (entregadores[i] != NULL)
         {
-
-            if (separadores[i]->getTempoPronto() == tempo)
+            if (entregadores[i]->getTempoPronto() == tempo)
             {
-                Pedido *pedido = separadores[i];
-                separadores[i] = NULL;
-                separadoresOcupados--;
-
+                Pedido *pedido = entregadores[i];
+                entregadores[i] = NULL;
+                entregadoresOcupados--;
                 return pedido;
             }
         }
     }
-
     return NULL;
 }
 
-bool Separadores::existePedidoPronto(int tempo)
+bool Entregadores::existePedidoPronto(int tempo)
 {
-    for (int i = 0; i < numSeparadores; i++)
+    for (int i = 0; i < numEntregadores; i++)
     {
-        if (separadores[i] != NULL)
+        if (entregadores[i] != NULL)
         {
-
-            if (separadores[i]->getTempoPronto() == tempo)
+            if (entregadores[i]->getTempoPronto() == tempo)
             {
                 return true;
             }
         }
     }
+
+    return false;
 }
 
-bool Separadores::existeSeparadorLivre()
+bool Entregadores::existeEntregadorLivre()
 {
-    return numSeparadores != separadoresOcupados;
+    return numEntregadores != entregadoresOcupados;
 }
