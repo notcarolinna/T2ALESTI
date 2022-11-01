@@ -9,6 +9,7 @@ Pedido::Pedido(int produtos)
     this->produtos = produtos;
     this->tempoGastoFila = 0; // inicializa em 0
     this->tempoPronto = 0;
+    this->pedidoCancelado = false;
 }
 
 int Pedido::getProdutos()
@@ -18,7 +19,7 @@ int Pedido::getProdutos()
 
 void Pedido::setTempoPronto(int tempo)
 {
-    tempoPronto = tempo; // definindo que tempo pronto é tempo ;)
+    tempoPronto = tempo; // definindo que tempo pronto � tempo ;)
 }
 
 int Pedido::getTempoPronto()
@@ -34,4 +35,17 @@ void Pedido::addTempoGastoFila(int tempo)
 int Pedido::getTempoGastoFila()
 {
     return tempoGastoFila;
+}
+
+void Pedido::probCancelamento(int probCancelamento)
+{
+    if (rand() % (probCancelamento + 1))
+    {
+        probCancelamento = true;
+    }
+}
+
+bool Pedido::isPedidoCancelado()
+{
+    return pedidoCancelado;
 }
