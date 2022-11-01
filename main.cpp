@@ -40,7 +40,6 @@ int main()
 
         if (rand() % 100 <= PROBABILIDADE) // proabilidade do pedido ser criado
         {
-           //***por que na 42 já existe uma probabilidade de gerar pedido e embaixo também? O que cada rand faz?
            
             pedido = new Pedido(MIN_PRODUTOS + (rand() % (MAX_PRODUTOS - MIN_PRODUTOS + 1))); // resto de um número aleatório por (MAX_PRODUTOS - MIN_PRODUTOS + 1)
 
