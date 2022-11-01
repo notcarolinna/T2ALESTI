@@ -8,6 +8,11 @@ Separadores::Separadores(int numSeparadores)
     this->separadores = new Pedido *[numSeparadores]; // entregando o pedido para os separadores
     this->numSeparadores = numSeparadores;            // definindo o número de separadores
     this->separadoresOcupados = 0;
+
+    for (int i = 0; i < numSeparadores; i++)
+    {
+        separadores[i] = NULL;
+    }
 }
 
 void Separadores::adicionaPedido(Pedido *pedido, int tempo)
@@ -20,7 +25,7 @@ void Separadores::adicionaPedido(Pedido *pedido, int tempo)
             {
                 separadores[separadoresOcupados] = pedido;
                 separadoresOcupados++;
-                pedido->addTempoGastoFila(pedido->getTempoPronto() - tempo);
+                pedido->addTempoGastoFila(tempo - pedido->getTempoPronto());
                 pedido->setTempoPronto(tempo + pedido->getProdutos());
 
                 return;
