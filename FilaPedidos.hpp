@@ -1,17 +1,17 @@
 #pragma once
-#include "pedido.hpp";
+#include "Pedido.h"
 
-class FilaPedidos
-{
+class FilaPedidos {
 private:
-    Pedido** pedidos; //um * para o array e o outro pro ponteiro 
+    Pedido** pedidos;
     int tamanho;
 
 public:
     FilaPedidos();
 
-    void enqueue(Pedido* element);
-    Pedido* dequeue(); // vamos dar dequeue no pedido
+    void enqueue(Pedido* elemento);
+    Pedido* dequeue();
     int size();
     bool isEmpty();
+    void probCancelamento(int probCancelamento);
 };
