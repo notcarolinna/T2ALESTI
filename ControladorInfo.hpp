@@ -3,18 +3,17 @@
 class ControladorInfo
 {
 private:
-    int numPedidosCriados;
-    int numPedidosCancelados;
-    int numPedidosEnviados;
-
+	int numPedidosCriados;
+	int numPedidosCancelados;
+	int numPedidosEnviados;
 public:
-    ControladorInfo();
-    
-    void addPedidoCriado();
-    void addPedidoCancelado();
-    void addPedidoEnviado();
+	ControladorInfo();
 
-    int getPedidosCriados();
-    int getPedidosCancelados();
-    int getPedidosEnviados();
+	void addPedidoCriado();
+	void addPedidoCancelado();
+	void addPedidoEnviado();
+
+	int getPedidosCriados();
+	int getPedidosCancelados();
+	int getPedidosEnviados();
 };
