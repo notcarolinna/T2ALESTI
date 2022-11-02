@@ -1,130 +1,123 @@
 #include <iostream>
-#include <string>
 
-#include "pedido.hpp"
-#include "FilaPedidos.hpp"
-#include "Separadores.hpp"
-#include "Entregadores.hpp"
-#include "ControladorInfo.hpp"
+#include "Pedido.h"
+#include "FilaPedidos.h"
+#include "Separadores.h"
+#include "Entregadores.h"
+#include "ControladorInfo.h"
 
 using namespace std;
 
 int main()
 {
-    int TEMPO_MAX = 60;     
-    int PROBABILIDADE = 45; // probabilidade de aparecer um pedido
-    int MIN_PRODUTOS = 5;   // mínimo de produtos
-    int MAX_PRODUTOS = 10;  // máximo de produtos
+	int RODADAS = 60; // Rodadas
+	int PROBABILIDADE = 45; // Probabilidade de aparecer um pedido
+	int MIN_PRODUTOS = 5;
+	int MAX_PRODUTOS = 10;
 
-    int NUM_SEPARADORES = 3;
-    int NUM_ENTREGADORES = 3;
+	int NUM_SEPARADORES = 3;
+	int NUM_ENTREGADORES = 3;
 
-    int PROB_CANCELAMENTO = 5; // probabilidade de um pedido ser cancelado
+	int PROB_CANCELAMENTO = 5;
 
-    int tempo = 0;         
-    int pedidosCriados = 0; // número de pedidos criados
+	int tempo = 0;
 
-    Pedido *pedido; // construtor da classe pedido
+	Pedido* pedido;
 
-    FilaPedidos *filaSeparador = new FilaPedidos(); 
-    FilaPedidos *filaEntrega = new FilaPedidos();
+	FilaPedidos* filaSeparador = new FilaPedidos();
+	FilaPedidos* filaEntrega = new FilaPedidos();
+	ControladorInfo* controlador = new ControladorInfo();
 
-    Separadores *separadores = new Separadores(NUM_SEPARADORES);     // cria 3 separadores com a quantidade definida na linha 19
-    Entregadores *entregadores = new Entregadores(NUM_ENTREGADORES); // cria 3 entregadores com a quantidade definida na linha 20
+	Separadores* separadores = new Separadores(NUM_SEPARADORES);    //criação de 3 separadores
+	Entregadores* entregadores = new Entregadores(NUM_ENTREGADORES); //criação de 3 entregadores
 
-    ControladorInfo *controlador = new ControladorInfo(); 
 
-    while (tempo != TEMPO_MAX) // while pra tudo isso rodar enquanto não bater no tempo max
-    {
-                  
 
-        if (rand() % 100 <= PROBABILIDADE) // proabilidade do pedido ser criado
-        {
-           
-            pedido = new Pedido(MIN_PRODUTOS + (rand() % (MAX_PRODUTOS - MIN_PRODUTOS + 1))); // resto de um número aleatório por (MAX_PRODUTOS - MIN_PRODUTOS + 1)
 
-            pedido->setTempoPronto(tempo);  // modifica o tempo
-            filaSeparador->enqueue(pedido); // reduz a quantidade de pedidos
-            controlador->addPedidoCriado(); // adiciona o pedido na lista dos pedidos criados
-        }
+	while (tempo != RODADAS) // vai rodar até chegar no número de rodadas dita pelo usuário
+	{
 
-        // verificar se existe um separador livre pra organizar o pedido e deixar o pacote pronto pro entregador
+		if (rand() % 100 <= PROBABILIDADE)// probabilidade do pedido ser criado
+		{
+			pedido = new Pedido(MIN_PRODUTOS + (rand() % (MAX_PRODUTOS - MIN_PRODUTOS + 1)));
 
-        while (separadores->existeSeparadorLivre() && !(filaSeparador->isEmpty())) // vai no arquivo dos separadores e verifica se existe um livre enquanto a fila dos separadores NÃO ESTÁ VAZIA.
-        {
-            pedido = filaSeparador->dequeue(); // um separador fica ocupado
-            
-            //CANCELAMENTO
-            
-            if (pedido->isPedidoCancelado())   // se o pedido pôde ser cancelado
-            {
-                controlador->addPedidoCancelado(); // adiciona o pedido na lista de cancelados
-                delete pedido;                     // deleta o pedido
-            }
-            else
-            {
-                separadores->adicionaPedido(pedido, tempo); // envia o pedido para os separadores
-                // *** Não entendi o pedido e o tempo, seria para saber quanto tempo o pedido ficou na fila de espera?
-            }
-        }
+			pedido->setTempoPronto(tempo); // *** Inicia a contagem de tempo?
+			filaSeparador->enqueue(pedido);
+			controlador->addPedidoCriado();
+		}
 
-        // verificar se o separador terminou de organizar o pedido
 
-        while (separadores->existePedidoPronto(tempo)) // se existe um pedido disponível para entrega
-        {
-            pedido = separadores->removePedidoPronto(tempo); // o pedido ficou pronto para o entregador
-            
-            //CANCELAMENTO
-            
-            if (pedido->isPedidoCancelado())                
-            {
-                controlador->addPedidoCancelado(); // cancelou, foi pra lista
-                delete pedido;                     // foi aniquilado
-            }
-            else 
-            {
-                filaEntrega->enqueue(pedido); // Coloca o pedido na lista de pedidos para serem entregues
-            }
-        }
+		while (separadores->existeSeparadorLivre() && !(filaSeparador->isEmpty()))	//Verifica se há um separador livre e se a fila de separadores não está vazia
+		{
+			pedido = filaSeparador->dequeue(); //Sai da fila de espera de um separador
 
-        // Verificação de disponibilidade de um entregador
-        while (entregadores->existeEntregadorLivre() && !(filaEntrega->isEmpty())) // verifica se tem um entregador livre enquanto a fila de motoboys NÃO ESTÁ VAZIA
-        {
-            pedido = filaEntrega->dequeue(); // O pedido saiu da fila de entrega
-           
-            //CANCELAMENTO
-            
-            if (pedido->isPedidoCancelado())
-            {
-                controlador->addPedidoCancelado(); 
-                delete pedido;                     
-            }
-            else
-            {
-                entregadores->adicionaPedido(pedido, tempo); // O pedido foi entregue ao motoboy
-            }
-        }
+			//SOLICITAÇÃO DE CANCELAMENTO
 
-        // O Entregador está na rua
-        while (entregadores->existePedidoPronto(tempo)) 
-        {
-            pedido = entregadores->removePedidoPronto(tempo); 
-            controlador->addPedidoEnviado();                  
-            delete pedido;                                    
-            
-        }
+			if (pedido->isPedidoCancelado())
+			{
+				controlador->addPedidoCancelado();
+				delete pedido;
+			}
+			else
+			{
+				separadores->adicionaPedido(pedido, tempo); //Vai para um separador
+			}
+		}
 
-        filaSeparador->probCancelamento(PROB_CANCELAMENTO); // ?????????
-        filaEntrega->probCancelamento(PROB_CANCELAMENTO);
 
-        tempo++;
-    }
+		while (separadores->existePedidoPronto(tempo)) //Verifica se o separador terminou de organizar o pedido
+		{
+			pedido = separadores->removePedidoPronto(tempo); //Separador termina o pedido
+
+			//SOLICITAÇÃO DE CANCELAMENTO
+
+			if (pedido->isPedidoCancelado())
+			{
+				controlador->addPedidoCancelado();
+				delete pedido;
+			}
+			else {
+				filaEntrega->enqueue(pedido); //Coloca o pedido na fila de entrega
+			}
+		}
+
+		while (entregadores->existeEntregadoresLivre() && !(filaEntrega->isEmpty()))//Verifica se há um entregador livre e se a fila de entregadores não está vazia
+		{
+			pedido = filaEntrega->dequeue(); //Sai da fila de entrega
+			
+			//SOLICITAÇÃO DE CANCELAMENTO
+			
+			if (pedido->isPedidoCancelado())
+			{
+				controlador->addPedidoCancelado();
+				delete pedido;
+			}
+			else
+			{
+				entregadores->adicionaPedido(pedido, tempo); //Libera o pedido para o entregador
+			}
+		}
+
+
+		while (entregadores->existePedidoPronto(tempo)) //Roda enquanto tiver um pedido para ser entregue
+		{
+			pedido = entregadores->removePedidoPronto(tempo); //Entregador pega o pedido e sai para entrega
+			controlador->addPedidoEnviado();
+			delete pedido;
+		}
+
+		filaSeparador->probCancelamento(PROB_CANCELAMENTO);
+		filaEntrega->probCancelamento(PROB_CANCELAMENTO);
+
+
+		tempo++;
+
+	}
+
+
+	// TESTES
+
+	cout << "\nPedidos Criados: " << controlador->getPedidosCriados() << endl;
+	cout << "\nPedidos Cancelados: " << controlador->getPedidosCancelados() << endl;
+	cout << "\nPedidos Entregues: " << controlador->getPedidosEnviados() << endl;
 }
-
-//NOTAS
-// INTERFACE: O usuário decide apenas o número de rodadas
-
-
-
-
-
