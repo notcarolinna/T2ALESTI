@@ -1,21 +1,23 @@
 #pragma once
 
-class Pedido
-{
+class Pedido {
 private:
-    int produtos;
-    int tempoPronto;    // quando está pronto
-    int tempoGastoFila; // diferença entre entradar e sair da fila
-    bool pedidoCancelado;
+	int produtos;
+	int tempoPronto;	// Quando esta pronto
+	int tempoGastoFila; // Diferença entre entrar e sair da fila
+	bool pedidoCancelado;
 
 public:
-    Pedido(int produtos);
+	Pedido(int produtos);
 
-    int getProdutos();                           // retorna a quantidade de produto
-    int getTempoPronto();                        // retorna quando estiver pronto
-    void setTempoPronto(int tempo);              // modifica o tempo pronto
-    int getTempoGastoFila();                     // retorna o tempo gasto em fila
-    void addTempoGastoFila(int tempo);           // adicionando tempo
-    void probCancelamento(int probCancelamento); // probabilidade de um pedido ser cancelado
-    bool isPedidoCancelado();                    // verifica se o pedido conseguiu ser cancelado
+	int getProdutos();
+	int getTempoPronto();
+	int getTempoGastoFila();
+
+
+	void setTempoPronto(int tempo);                //Quando o pedido fica pronto
+	void addTempoGastoFila(int tempo);             //Quanto tempo o pedido fica na fila
+	void probCancelamento(int probCancelamento);   //Proabilidade de o pedido ser cancelado
+
+	bool isPedidoCancelado();
 };
