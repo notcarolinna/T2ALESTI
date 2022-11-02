@@ -1,40 +1,41 @@
 #include <iostream>
-#include "ControladorInfo.hpp"
+#include "ControladorInfo.h"
+
 using namespace std;
 
 ControladorInfo::ControladorInfo()
 {
-    this->numPedidosCriados = 0;
-    this->numPedidosCancelados = 0;
-    this->numPedidosEnviados = 0;
+	this->numPedidosCriados = 0;
+	this->numPedidosCancelados = 0;
+	this->numPedidosEnviados = 0;
 }
 
 void ControladorInfo::addPedidoCriado()
 {
-    numPedidosCriados++;
+	numPedidosCriados++;
 }
 
 void ControladorInfo::addPedidoCancelado()
 {
-    numPedidosCancelados++;
+	numPedidosCancelados++;
 }
 
 void ControladorInfo::addPedidoEnviado()
 {
-    numPedidosEnviados++;
+	numPedidosEnviados++;
 }
 
 int ControladorInfo::getPedidosCriados()
 {
-    return numPedidosCriados;
+	return numPedidosCriados;
 }
 
 int ControladorInfo::getPedidosCancelados()
 {
-    return numPedidosCancelados;
+	return numPedidosCancelados;
 }
 
 int ControladorInfo::getPedidosEnviados()
 {
-    return numPedidosEnviados;
+	return numPedidosEnviados;
 }
