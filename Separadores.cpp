@@ -1,21 +1,19 @@
 #include <iostream>
-#include "Separadores.hpp"
+#include "Separadores.h"
 
 using namespace std;
 
 Separadores::Separadores(int numSeparadores)
 {
-    this->separadores = new Pedido *[numSeparadores]; // entregando o pedido para os separadores
-    this->numSeparadores = numSeparadores;            // definindo o número de separadores
+    this->separadores = new Pedido * [numSeparadores];
+    this->numSeparadores = numSeparadores;
     this->separadoresOcupados = 0;
 
     for (int i = 0; i < numSeparadores; i++)
-    {
         separadores[i] = NULL;
-    }
 }
 
-void Separadores::adicionaPedido(Pedido *pedido, int tempo)
+void Separadores::adicionaPedido(Pedido* pedido, int tempo)
 {
     if (separadoresOcupados < numSeparadores)
     {
@@ -23,8 +21,9 @@ void Separadores::adicionaPedido(Pedido *pedido, int tempo)
         {
             if (separadores[i] == NULL)
             {
-                separadores[separadoresOcupados] = pedido;
+                separadores[i] = pedido;
                 separadoresOcupados++;
+
                 pedido->addTempoGastoFila(tempo - pedido->getTempoPronto());
                 pedido->setTempoPronto(tempo + pedido->getProdutos());
 
@@ -34,24 +33,21 @@ void Separadores::adicionaPedido(Pedido *pedido, int tempo)
     }
 }
 
-Pedido *Separadores::removePedidoPronto(int tempo)
+Pedido* Separadores::removePedidoPronto(int tempo)
 {
     for (int i = 0; i < numSeparadores; i++)
     {
         if (separadores[i] != NULL)
         {
-
             if (separadores[i]->getTempoPronto() == tempo)
             {
-                Pedido *pedido = separadores[i];
+                Pedido* pedido = separadores[i];
                 separadores[i] = NULL;
                 separadoresOcupados--;
-
                 return pedido;
             }
         }
     }
-
     return NULL;
 }
 
@@ -61,16 +57,19 @@ bool Separadores::existePedidoPronto(int tempo)
     {
         if (separadores[i] != NULL)
         {
-
             if (separadores[i]->getTempoPronto() == tempo)
             {
                 return true;
             }
         }
     }
+
+    return false;
 }
 
 bool Separadores::existeSeparadorLivre()
 {
     return numSeparadores != separadoresOcupados;
 }
+
+
