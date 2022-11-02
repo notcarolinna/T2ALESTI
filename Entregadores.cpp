@@ -1,11 +1,12 @@
 #include <iostream>
-#include "Entregadores.hpp"
+
+#include "Entregadores.h"
 
 using namespace std;
 
 Entregadores::Entregadores(int numEntregadores)
 {
-    this->entregadores = new Pedido *[numEntregadores];
+    this->entregadores = new Pedido * [numEntregadores];
     this->numEntregadores = numEntregadores;
     this->entregadoresOcupados = 0;
 
@@ -13,7 +14,7 @@ Entregadores::Entregadores(int numEntregadores)
         entregadores[i] = NULL;
 }
 
-void Entregadores::adicionaPedido(Pedido *pedido, int tempo)
+void Entregadores::adicionaPedido(Pedido* pedido, int tempo)
 {
     if (entregadoresOcupados < numEntregadores)
     {
@@ -33,7 +34,7 @@ void Entregadores::adicionaPedido(Pedido *pedido, int tempo)
     }
 }
 
-Pedido *Entregadores::removePedidoPronto(int tempo)
+Pedido* Entregadores::removePedidoPronto(int tempo)
 {
     for (int i = 0; i < numEntregadores; i++)
     {
@@ -41,7 +42,7 @@ Pedido *Entregadores::removePedidoPronto(int tempo)
         {
             if (entregadores[i]->getTempoPronto() == tempo)
             {
-                Pedido *pedido = entregadores[i];
+                Pedido* pedido = entregadores[i];
                 entregadores[i] = NULL;
                 entregadoresOcupados--;
                 return pedido;
@@ -67,7 +68,7 @@ bool Entregadores::existePedidoPronto(int tempo)
     return false;
 }
 
-bool Entregadores::existeEntregadorLivre()
+bool Entregadores::existeEntregadoresLivre()
 {
     return numEntregadores != entregadoresOcupados;
 }
