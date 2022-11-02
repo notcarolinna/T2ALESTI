@@ -1,18 +1,19 @@
 #pragma once
-#include "pedido.hpp"
+#include "Pedido.h"
 
 class Entregadores
 {
 private:
-    Pedido **entregadores;
-    int numEntregadores;
-    int entregadoresOcupados;
+	Pedido** entregadores;
+	int numEntregadores;
+	int entregadoresOcupados;
 
 public:
-    Entregadores(int numEntregadores);
+	Entregadores(int numEntregadores);
 
-    void adicionaPedido(Pedido *pedido, int tempo); // um pedido é disponibilizado para o entregador
-    Pedido *removePedidoPronto(int tempo);          // *** exclui o pedido da lista de entrega ou o pedido foi entregue?
-    bool existePedidoPronto(int tempo);             // existe um pedido pronto para entrega
-    bool existeEntregadorLivre();                   // existe um entregador disponível para entrega
+	void adicionaPedido(Pedido* pedido, int tempo);
+	Pedido* removePedidoPronto(int tempo);
+	bool existePedidoPronto(int tempo);
+	bool existeEntregadoresLivre();
+
 };
