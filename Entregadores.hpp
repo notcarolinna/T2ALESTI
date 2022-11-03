@@ -8,6 +8,8 @@ private:
 	int numEntregadores;
 	int entregadoresOcupados;
 
+	int* comissoes;
+
 public:
 	Entregadores(int numEntregadores);
 
@@ -15,5 +17,6 @@ public:
 	Pedido* removePedidoPronto(int tempo);
 	bool existePedidoPronto(int tempo);
 	bool existeEntregadoresLivre();
-
+	void probCancelamento(int probCancelamento);
+	void exibeComissoes();
 };
