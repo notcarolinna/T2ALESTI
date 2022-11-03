@@ -19,7 +19,8 @@ int main()
 
 	int PROBABILIDADE = 100;
 	int MAX_PRODUTOS = 10;
-
+	int MIN_PRODUTOS = 5;
+	
 	int NUM_SEPARADORES = 3;
 	int NUM_ENTREGADORES = 3;
 
