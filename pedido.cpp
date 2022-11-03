@@ -3,11 +3,12 @@
 
 using namespace std;
 
-Pedido::Pedido(int produtos) {
+Pedido::Pedido(int produtos, int tempo) {
 	this->produtos = produtos;
 	this->tempoGastoFila = 0;
 	this->tempoPronto = 0;
 	this->pedidoCancelado = false;
+	this->tempoPedidoEntrou = tempo;
 }
 
 int Pedido::getProdutos() {
@@ -32,7 +33,7 @@ int Pedido::getTempoGastoFila() {
 
 void Pedido::probCancelamento(int probCancelamento)
 {
-	if (rand() % (probCancelamento + 1))
+	if ((rand() % 100 + 1) < probCancelamento)
 	{
 		pedidoCancelado = true;
 	}
@@ -42,5 +43,10 @@ bool Pedido::isPedidoCancelado()
 {
 	return pedidoCancelado;
 }
+
+int Pedido::getTempoPedidoEntrou() {
+	return tempoPedidoEntrou;
+}
+
 
 
