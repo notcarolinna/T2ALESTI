@@ -8,6 +8,8 @@ private:
 	int numSeparadores;
 	int separadoresOcupados;
 
+	int* comissoes;
+
 public:
 	Separadores(int numSeparadores);
 
@@ -15,5 +17,6 @@ public:
 	Pedido* removePedidoPronto(int tempo);
 	bool existePedidoPronto(int tempo);
 	bool existeSeparadorLivre();
-
+	void probCancelamento(int probCancelamento);
+	void exibeComissoes();
 };
