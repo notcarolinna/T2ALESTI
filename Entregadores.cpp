@@ -6,11 +6,14 @@ using namespace std;
 Entregadores::Entregadores(int numEntregadores)
 {
     this->entregadores = new Pedido * [numEntregadores];
+    this->comissoes = new int[numEntregadores];
     this->numEntregadores = numEntregadores;
     this->entregadoresOcupados = 0;
 
-    for (int i = 0; i < numEntregadores; i++)
+    for (int i = 0; i < numEntregadores; i++) {
         entregadores[i] = NULL;
+        comissoes[i] = 0;
+    }
 }
 
 void Entregadores::adicionaPedido(Pedido* pedido, int tempo)
@@ -42,6 +45,7 @@ Pedido* Entregadores::removePedidoPronto(int tempo)
             if (entregadores[i]->getTempoPronto() == tempo)
             {
                 Pedido* pedido = entregadores[i];
+                comissoes[i] += 1;
                 entregadores[i] = NULL;
                 entregadoresOcupados--;
                 return pedido;
@@ -71,3 +75,21 @@ bool Entregadores::existeEntregadoresLivre()
 {
     return numEntregadores != entregadoresOcupados;
 }
+
+void Entregadores::probCancelamento(int probCancelamento)
+{
+    for (int i = 0; i < numEntregadores; i++)
+    {
+        if (entregadores[i] != NULL)
+            entregadores[i]->probCancelamento(probCancelamento);
+    }
+}
+
+void Entregadores::exibeComissoes()
+{
+    for (int i = 0; i < numEntregadores; i++)
+    {
+        cout << "O entregador " << i + 1 << " entregou " << comissoes[i] << " pedidos" << endl;
+    }
+}
+
