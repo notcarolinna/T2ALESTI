@@ -3,21 +3,20 @@
 class Pedido {
 private:
 	int produtos;
-	int tempoPronto;	// Quando esta pronto
-	int tempoGastoFila; // Diferença entre entrar e sair da fila
+	int tempoPronto;
+	int tempoGastoFila;
 	bool pedidoCancelado;
+	int tempoPedidoEntrou;
 
 public:
-	Pedido(int produtos);
+	Pedido(int produtos, int tempo);
 
 	int getProdutos();
 	int getTempoPronto();
+	void setTempoPronto(int tempo);
 	int getTempoGastoFila();
-
-
-	void setTempoPronto(int tempo);                //Quando o pedido fica pronto
-	void addTempoGastoFila(int tempo);             //Quanto tempo o pedido fica na fila
-	void probCancelamento(int probCancelamento);   //Proabilidade de o pedido ser cancelado
-
+	void addTempoGastoFila(int tempo);
+	void probCancelamento(int probCancelamento);
 	bool isPedidoCancelado();
+	int getTempoPedidoEntrou();
 };
