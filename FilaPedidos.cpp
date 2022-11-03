@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "FilaPedidos.h"
 
 using namespace std;
@@ -23,7 +22,6 @@ void FilaPedidos::enqueue(Pedido* elemento)
 			newPedidos[i] = pedidos[i];
 		}
 
-		// delete pedidos;
 		pedidos = newPedidos;
 	}
 
@@ -58,6 +56,8 @@ void FilaPedidos::probCancelamento(int probCancelamento)
 		pedidos[i]->probCancelamento(probCancelamento);
 	}
 }
+
+
 
 
 
